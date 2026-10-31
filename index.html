@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age on Other Planets Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+        }
+        .student-info {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-left: 4px solid #38bdf8;
+        }
+        .student-info div {
+            font-size: 14px;
+        }
+        .student-info span {
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        .input-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        input[type="date"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .planet-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .planet-card h3 {
+            margin-top: 0;
+            color: #38bdf8;
+        }
+        .age {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f43f5e;
+            margin-top: 10px;
+        }
+        .formula-box {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #94a3b8;
+            text-align: center;
+            border: 1px dashed #475569;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Age on Other Worlds</h1>
+
+    <!-- Student Information Metadata -->
+    <div class="student-info">
+        <div>Name: <span>John Rocel B. Talambayan</span></div>
+        <div>Course: <span>BSIT</span></div>
+        <div>Section: <span>1B</span></div>
+    </div>
+
+    <!-- Birthday Input -->
+    <div class="input-section">
+        <label for="dob"><strong>Select Your Birthday:</strong></label><br><br>
+        <input type="date" id="dob" value="2000-01-01" onchange="calculateAges()">
+    </div>
+
+    <!-- Planet Cards Grid -->
+    <div class="grid" id="planets-grid">
+        <!-- Populated via JavaScript -->
+    </div>
+
+    
+</div>
+
+<script>
+    const planets = [
+        { name: "Mercury", days: 88, desc: "You are much older here!" },
+        { name: "Venus", days: 225, desc: "225 Earth days per orbit." },
+        { name: "Earth", days: 365, desc: "Our home planet." },
+        { name: "Mars", days: 687, desc: "The Red Planet." },
+        { name: "Jupiter", days: 4380, desc: "About 11.9 to 12 Earth years." },
+        { name: "Saturn", days: 10767.5, desc: "29.5 Earth years." },
+        { name: "Uranus", days: 30660, desc: "84 Earth years." },
+        { name: "Neptune", days: 60152, desc: "165 Earth years." },
+        { name: "Pluto", days: 90520, desc: "Dwarf planet (reclassified 2006)." }
+    ];
+
+    function calculateAges() {
+        const dobVal = document.getElementById('dob').value;
+        if (!dobVal) return;
+
+        const birthDate = new Date(dobVal);
+        const today = new Date();
+        const diffTime = Math.max(0, today - birthDate);
+        const earthDaysLived = diffTime / (1000 * 60 * 60 * 24);
+
+        const grid = document.getElementById('planets-grid');
+        grid.innerHTML = '';
+
+        planets.forEach(planet => {
+            const age = (earthDaysLived / planet.days).toFixed(2);
+            
+            const card = document.createElement('div');
+            card.className = 'planet-card';
+            card.innerHTML = `
+                <h3>${planet.name}</h3>
+                <p style="font-size: 12px; color: #94a3b8;">${planet.desc}</p>
+                <div class="age">${age}</div>
+                <p style="font-size: 12px; margin-top:5px;">Years Old</p>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Run on load
+    calculateAges();
+</script>
+
+</body>
+</html>
